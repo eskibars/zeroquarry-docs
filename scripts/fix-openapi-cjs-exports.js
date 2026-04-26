@@ -10,6 +10,7 @@ if (!fs.existsSync(assetsDir)) {
 
 let patchedFiles = 0;
 let patchedReferences = 0;
+const bareExportsPattern = /(^|[^.])\bexports\./g;
 
 for (const file of fs.readdirSync(assetsDir)) {
   if (!/^common\..*\.js$/.test(file)) {
@@ -18,12 +19,12 @@ for (const file of fs.readdirSync(assetsDir)) {
 
   const filePath = path.join(assetsDir, file);
   const original = fs.readFileSync(filePath, "utf8");
-  const patched = original.replace(/\bexports\./g, "t.");
+  const patched = original.replace(bareExportsPattern, "$1t.");
 
   if (patched !== original) {
     fs.writeFileSync(filePath, patched);
     patchedFiles += 1;
-    patchedReferences += (original.match(/\bexports\./g) || []).length;
+    patchedReferences += (original.match(bareExportsPattern) || []).length;
   }
 }
 
