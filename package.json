@@ -12,6 +12,9 @@
     "start": "npm run gen:api && docusaurus start --host 0.0.0.0",
     "build": "npm run gen:api && docusaurus build && node scripts/fix-openapi-cjs-exports.js",
     "serve": "docusaurus serve --host 0.0.0.0",
+    "screenshots": "node scripts/screenshots/capture.js",
+    "screenshots:auth": "node scripts/screenshots/auth.js",
+    "screenshots:install": "playwright install chromium",
     "clear": "docusaurus clear && docusaurus clean-api-docs all"
   },
   "dependencies": {
@@ -31,5 +34,7 @@
     "express": "4.21.2",
     "webpackbar": "^7.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
 }
